@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Jul  4 23:50:40 2024
-#目的：將處理過後符合cryolo接受的box format，減少至?%的標註量，用來作為active learning的初始粒子選取
+#目的：將處理過後符合cryolo接受的box format，減少至X%的標註量，用來作為active learning的初始粒子選取
 @author: Gratia
 """
 
 import os
 import random
 
-# in/out put folder path
+# 輸入和輸出資料夾路徑
 input_folder = r"/home/m112040034/workspace/simulation/box/train"
 output_folder = r"/home/m112040034/workspace/simulation/partial_box/initial"
 
-# check folder exists
+# 確保輸出資料夾存在，如果不存在則創建它
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
-# 刪除?%的行數
+# 刪除(1-X)的行數
 delete_percentage = 0.875
 
 # 處理每個.box檔案
@@ -24,7 +24,7 @@ for i in range(240):
     input_file_path = os.path.join(input_folder, f"micrograph_{i}.box")
     output_file_path = os.path.join(output_folder, f"micrograph_{i}.box")
     
-    # 讀取
+    # 讀取原始檔案
     with open(input_file_path, 'r') as file:
         lines = file.readlines()
     

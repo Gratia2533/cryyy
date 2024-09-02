@@ -6,20 +6,20 @@ Created on Thu Jul  4 23:15:24 2024
 """
 import os
 
-# in/out put folder path
-input_folder = r"/home/m112040034/workspace/simulation/star"
+# 輸入和輸出資料夾路徑
+input_folder = r"/home/m112040034/workspace/simulation/star/train"
 output_folder = r"/home/m112040034/workspace/simulation/box/train"
 
-# check folder exists
+# 確保輸出資料夾存在，如果不存在則創建它
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
 # 處理每一個star檔案
-for i in range(300):
+for i in range(0,240):
     input_file_path = os.path.join(input_folder, f"micrograph_{i}.star")
     output_file_path = os.path.join(output_folder, f"micrograph_{i}.box")
     
-    # 讀取
+    # 讀取檔案並處理數據
     with open(input_file_path, 'r') as file:
         lines = file.readlines()
     
