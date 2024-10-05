@@ -55,7 +55,7 @@ val_loss_file = os.path.join(evaluation_path, 'val_loss_log.txt')
 start_time = time.time()
 
 # 自動化流程
-for i in range(9):
+for i in range(1):
     iter = "initial" if i == 0 else f"iter{i}"
 
     # Step 1: Training
@@ -77,13 +77,13 @@ for i in range(9):
     
     #Step 4: 執行Python工具生成標註
     if i < 8:  # 在 iter8 時跳過這一步
-        #annotation_cmd = f"/home/m112040034/workspace/simulation/tool/main/entropy_score_adjust.py {iter}"
+        #annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/entropy_score_adjust.py {iter}"
         #隨機加入時使用
-        annotation_cmd = f"/home/m112040034/workspace/simulation/tool/main/only_IOU.py {iter}"
+        annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/only_IOU.py {iter}"
         #選擇較低信心程度使用
-        #annotation_cmd = f"/home/m112040034/workspace/simulation/tool/main/low_confidence_adjust.py {iter}"
+        #annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/low_confidence_adjust.py {iter}"
         #使用正規化後再求entropy score
-        #annotation_cmd = f"/home/m112040034/workspace/simulation/tool/main/norm_conf_es.py.py {iter}"
+        #annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/norm_conf_es.py.py {iter}"
         run_cmd(annotation_cmd)
 
 end_time = time.time()
