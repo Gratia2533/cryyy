@@ -11,7 +11,7 @@ from sklearn.utils import shuffle
 ####參數設定####
 #adjust_distance = 50 #校正時的誤差接受範圍
 
-iou_threshold =0.6 #校正使用的iou閾值
+iou_threshold =0.7 #校正使用的iou閾值
 
 filter_num = 70 #每次iteration要增加的粒子數
 
@@ -220,9 +220,9 @@ def calculate_circle_iou(circle1, circle2):
     
     # 計算兩個圓的重疊面積
     part = r**2 * math.acos((distance) / (2 * r))#半徑平方*(圓心距離/直徑的比例，透過反餘弦得到弧度)
-    diamond = 0.5 * math.sqrt(distance**2 * (4 * r**2 - distance**2))
+    diamond = 2 * 0.5 * distance * math.sqrt(abs(r**2 - (distance/2)**2)) #2個等腰三角形，distance是底，後面是在算高，r是斜邊
     
-    inter_area = 2 * part - diamond#兩個扇形，減掉上半跟下半三角形
+    inter_area = 2 * part - diamond #兩個扇形，減掉2個等邊三角形
     
     # 計算兩個圓的總面積（這裡兩個圓的面積相等）
     union_area = 2 * (math.pi * r**2) - inter_area
