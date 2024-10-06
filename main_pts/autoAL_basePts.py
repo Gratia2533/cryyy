@@ -83,7 +83,7 @@ for i in range(1):
         #選擇較低信心程度使用
         #annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/low_confidence_adjust.py {iter}"
         #使用正規化後再求entropy score
-        #annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/norm_conf_es.py.py {iter}"
+        #annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/norm_conf_es.py {iter}"
         run_cmd(annotation_cmd)
 
 end_time = time.time()
