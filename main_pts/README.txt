@@ -8,4 +8,6 @@ initial_random_select.py:Enter the number required for random selection, then ge
 
 ★norm_conf_es.py:First normalize the confidence and then calculate the entropy score. After checking through IOU, select those with larger entropy scores.
 
+★boundary_dist.py:Check through IOU and select those with lower |confidence-topt|(boundary distance).
+
 autoAL_basePts.py:Replace the python file in the annotation_cmd in the Step4 with the above mark ★ to achieve active learning with different methods
