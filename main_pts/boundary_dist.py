@@ -32,6 +32,7 @@ else:
     part2 = ''.join([char for char in iter if char.isdigit()])
     next = part1+str(int(part2)+1)
 
+iter = 'initial'
 CBOX_dir = "/home/m112040034/workspace/simulation/output/" + iter + "/CBOX"
 box_dir = "/home/m112040034/workspace/simulation/output/" + iter + "/process/box"
 gt_dir = "/home/m112040034/workspace/simulation/box/train"  # Groundtruth 路徑
@@ -76,7 +77,7 @@ def find_topt(html_dir, topt_log):
     else:
         raise ValueError("Cannot find the 'Best confidence threshold according F1 statistic' in the file.")
 
-topt = find_topt(evaluation_dir,topt_log_dir)
+topt = find_topt(html_dir,topt_log_dir)
 
 def process_cbox_file(input_file, output_file):
     with open(input_file, 'r') as file:
