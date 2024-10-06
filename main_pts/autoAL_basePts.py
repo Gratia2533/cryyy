@@ -11,7 +11,7 @@ train_config_path = '/home/m112040034/workspace/simulation/train_config/'
 output_path = '/home/m112040034/workspace/simulation/output/'
 mrc_path = '/home/m112040034/workspace/simulation/mrc/'
 box_path = '/home/m112040034/workspace/simulation/box/'
-evaluation_path = '/home/m112040034/workspace/simulation/evaluation/pts280_IOU7_random/'
+evaluation_path = '/home/m112040034/workspace/simulation/evaluation/pts280_IOU7_bdist/'
 
 # 執行命令並捕獲輸出
 def run_cmd(cmd):
@@ -55,11 +55,11 @@ val_loss_file = os.path.join(evaluation_path, 'val_loss_log.txt')
 start_time = time.time()
 
 # 自動化流程
-for i in range(1):
+for i in range(9):
     iter = "initial" if i == 0 else f"iter{i}"
 
     # Step 1: Training
-    training_cmd = f"{base_cmd} train -c {train_config_path}{iter}.json -w 0 -g 0 1 2 -nc -1 --gpu_fraction 1.0 -e 10 -lft 2 --cleanup --seed 10 --skip_augmentation"
+    training_cmd = f"{base_cmd} train -c {train_config_path}{iter}.json -w 0 -g 0 1 2 3 -nc -1 --gpu_fraction 1.0 -e 10 -lft 2 --cleanup --seed 10 --skip_augmentation"
     output = run_cmd(training_cmd)
     
     # 提取 val_loss 並保存
@@ -68,22 +68,24 @@ for i in range(1):
     
     # Step 2: Prediction
     if i < 8:  # 在 iter8 時跳過這一步
-        prediction_cmd = f"{base_cmd} predict -c {train_config_path}{iter}.json -w {output_path}{iter}/{iter}_model.h5 -i {mrc_path}train -o {output_path}{iter} -t 0 -d 0 -pbs 3 --gpu_fraction 1.0 -nc -1 --norm_margin 0.0 -sm LINE_STRAIGHTNESS -st 0.95 -sr 1.41 -ad 10 --directional_method PREDICTED -mw 100 -tsr -1 -tmem 0 -mn3d 2 -tmin 5 -twin -1 -tedge 0.4 -tmerge 0.8"
+        prediction_cmd = f"{base_cmd} predict -c {train_config_path}{iter}.json -w {output_path}{iter}/{iter}_model.h5 -i {mrc_path}train -o {output_path}{iter} -t 0 -d 0 -pbs 3 --gpu_fraction 1.0 -nc -1 --norm_margin 0.0 -sm LINE_STRAIGHTNESS -st 0.95 -sr 1.41 -ad 10 --directional_method PREDICTED -mw 100 -tsr -1 -tmem 0 -mn3d 2 -tmin 5 -twin -1 -tedge 0.4 -tmerge 0.8 -g 2"
         run_cmd(prediction_cmd)
     
     # Step 3: Evaluation
-    evaluation_cmd = f"{base_cmd} evaluation -c {train_config_path}{iter}.json -w {output_path}{iter}/{iter}_model.h5 -o {evaluation_path}{iter}_evaluation.html -i {mrc_path}test -b {box_path}test -g 1"
+    evaluation_cmd = f"{base_cmd} evaluation -c {train_config_path}{iter}.json -w {output_path}{iter}/{iter}_model.h5 -o {evaluation_path}{iter}_evaluation.html -i {mrc_path}test -b {box_path}test -g 3"
     run_cmd(evaluation_cmd)
     
     #Step 4: 執行Python工具生成標註
     if i < 8:  # 在 iter8 時跳過這一步
         #annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/entropy_score_adjust.py {iter}"
         #隨機加入時使用
-        annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/only_IOU.py {iter}"
+        #annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/only_IOU.py {iter}"
         #選擇較低信心程度使用
         #annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/low_confidence_adjust.py {iter}"
         #使用正規化後再求entropy score
         #annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/norm_conf_es.py {iter}"
+        #使用boundary distance
+        annotation_cmd = f"python /home/m112040034/workspace/simulation/tool/main/boundary_dist.py {iter} --evaluation_dir {evaluation_path}"
         run_cmd(annotation_cmd)
 
 end_time = time.time()
