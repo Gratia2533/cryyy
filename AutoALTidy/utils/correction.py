@@ -78,12 +78,14 @@ def main():
     # $====================================step3====================================$#
     regular.unique_row_data(adjust_dir, unique_dir, current_dir)
 
-    # 根據 method 判斷過濾行為，只需判斷一次，acd 是 sort_values 的 ascending
-    # 如果是Entropy Score或Entropy Score in Normalize Confidence，則要取較大值
-    # 如果是Low Confidence或Boundary Distance，則要取較小值
+    # $====================================step4====================================$#
+    '''
+    根據 method 判斷過濾行為，只需判斷一次，acd 是 sort_values 的 ascending
+    如果是Entropy Score或Entropy Score in Normalize Confidence，則要取較大值
+    如果是Low Confidence或Boundary Distance，則要取較小值
+    '''
     acd = method not in ["entropy_score", "norm_conf_es"]
 
-    # $====================================step4====================================$#
     if method == "random":
         #隨機挑選，只需要check IOU，因此不需要設置acd
         filter_pts.random_filter_row_data(unique_dir, filter_num, filter_dir)
