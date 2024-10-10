@@ -1,5 +1,5 @@
 # AutoALTidy<br>
-###Auto Active Learning - Tidy Version **(Maybe)**
+### Auto Active Learning - Tidy Version **(Maybe)**
 
 ## How to Use
 
