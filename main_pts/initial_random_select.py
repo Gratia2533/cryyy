@@ -6,7 +6,7 @@ pts_num = int(input('number?\n')) #隨機抽取的初始數量
 
 # 定義路徑
 source_dir = '/home/m112040034/workspace/simulation/box/train'
-target_dir = '/home/m112040034/workspace/simulation/partial_box/used_pool/initial'
+target_dir = '/home/m112040034/workspace/simulation/partial_box/initial'
 unused_dir = '/home/m112040034/workspace/simulation/partial_box/unused_pool/initial'
 
 # 確保目標目錄存在
