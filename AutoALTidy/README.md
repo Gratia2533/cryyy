@@ -21,7 +21,7 @@ python -m AutoALTidy.utils.<others.py> # To check others functional programs in 
 ```
 #### 2-1. Select Uncertainty Method
 During execution, you will be prompted to choose an Active Learning method.  
-Enter a number (1-5) that corresponds to the method you'd like to use:  
+**Enter a number (1-5)** that corresponds to the method you'd like to use:  
 <br>
 1.Random: Selects particles add to next iterations **randomly**.  
 <br>
