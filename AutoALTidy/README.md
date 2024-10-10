@@ -1,6 +1,6 @@
 # AutoALTidy<br>
 ### Auto Active Learning - Tidy Version **(Maybe)**
-#### #You still need to run [**`initial_random_select.py`**](https://github.com/Gratia2533/cryyy/blob/main/main_pts/initial_random_select.py) first to generate partial_box/initial before proceeding.
+#### You still need to run [**`initial_random_select.py`**](https://github.com/Gratia2533/cryyy/blob/main/main_pts/initial_random_select.py) first to generate partial_box/initial before proceeding.
 ## How to Use
 
 ### 1. Check Paths
