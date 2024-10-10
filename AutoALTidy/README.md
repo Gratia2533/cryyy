@@ -17,7 +17,7 @@ Once paths are set, run the following command to start the Active Learning proce
 python -m AutoALTidy.autoAL_basePts # To execute main program
 ```
 ```bash
-python -m AutoALTidy.utils.<others.py> # To check others functional programs in AutoALTidy/utils
+python -m AutoALTidy.utils.<others> # To check others functional programs in AutoALTidy/utils
 ```
 #### 2-1. Select Uncertainty Method
 During execution, you will be prompted to choose an Active Learning method.  
