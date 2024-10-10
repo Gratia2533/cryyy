@@ -11,7 +11,7 @@ def main(method, iou_threshold, filter_num):
     start_time = time.time()
 
     # 自動化流程
-    for i in range(2):
+    for i in range(9):
         iter_index = "initial" if i == 0 else f"iter{i}"
 
         # Step 1: Training
