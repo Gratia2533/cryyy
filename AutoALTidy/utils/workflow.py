@@ -2,7 +2,7 @@ import subprocess
 import re
 
 def run_cmd(cmd):
-    """執行命令並捕獲輸出"""
+    """執行命令並同步顯示輸出"""
     print(f"Running: {cmd}")
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, text=True)
     output = ""
@@ -13,7 +13,7 @@ def run_cmd(cmd):
     return output
 
 def extract_val_loss_from_output(output):
-    """提取 val_loss"""
+    """提取 val_loss，如果更改Epcoh數，偵測條件也要改Epoch 000XX:"""
     final_val_loss = None
     for line in output.splitlines():
         if "Epoch 00005:" in line and "val_loss" in line:
@@ -28,7 +28,7 @@ def extract_val_loss_from_output(output):
     return final_val_loss
 
 def write_val_loss_to_file(val_loss_file, iter_name, val_loss):
-    """保存 val_loss 到文件"""
+    """保存 val_loss 到檔案中"""
     if val_loss is not None:
         with open(val_loss_file, 'a') as f:
             f.write(f"{iter_name}:{val_loss:.5f}\n")

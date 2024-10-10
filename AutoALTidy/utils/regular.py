@@ -211,7 +211,7 @@ def generate_next_iter_annot(current_dir, filter_dir, next_dir):
     files_A = os.listdir(current_dir)
     files_B = os.listdir(filter_dir)
     
-    # 確保兩個目錄下的檔案數量和檔案名稱都一致
+    # 確保兩個路徑下的檔案數量和檔案名稱都一致
     if len(files_A) != len(files_B) or sorted(files_A) != sorted(files_B):
         raise ValueError("Directories A and B do not have the same number of files or identical filenames.")
 

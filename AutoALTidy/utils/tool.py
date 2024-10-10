@@ -29,7 +29,7 @@ def write_box_file(file_path, lines):
     '''
 #================================================================================#
 
-# 確保目錄存在，若不存在則創建
+# 確保路徑存在，若不存在則建立
 def ensure_directories_exist(*directories):
     for directory in directories:
         if not os.path.exists(directory):
@@ -38,7 +38,7 @@ def ensure_directories_exist(*directories):
         else:
             print(f"Directory already exists: {directory}")
 
-# 檢查目錄是否存在，若不存在則返回錯誤訊息
+# 檢查路徑是否存在，若不存在則返回錯誤訊息
 def check_directories_exist(*directories):
     missing_directories = []
     for directory in directories:
@@ -66,14 +66,14 @@ def check_file_exists(file_path):
 #確認使用的粒子數量
 def particles_amount_status(path):
     """
-    計算指定目錄下所有 .box 檔案中的總行數（即粒子數量）。 
-    :param path (str): 包含 .box 檔案的目錄路徑。
+    計算指定路徑下所有 .box 檔案中的總行數（即粒子數量）。 
+    :param path (str): 包含 .box 檔案的資料夾路徑。
     :return:total_lines (int): 總粒子數量。
     """
     # 初始化變數
     total_lines = 0
 
-    # 遍歷目錄中的所有 .box 文件
+    # 遍歷路徑中的所有 .box 檔案
     for filename in os.listdir(path):
         if filename.endswith(".box"):
             file_path = os.path.join(path, filename)
