@@ -1,6 +1,6 @@
 import os
 import math
-import tool
+from . import tool
 #========Step2:adjust========#
 def correction_by_iou(gt_dir, box_dir, adjust_dir, iou_th):
     '''

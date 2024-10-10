@@ -60,21 +60,25 @@ def find_confidence_range(CBOX_dir):
 
     return min_confidence, max_confidence
 
-def find_topt(html_dir, topt_log):
+def find_topt(html_file_path, topt_log):
     """
-    :param html_dir: CrYOLO進行evaluation後輸出的HTML路徑
-    :param topt_log: 紀錄topt的log file，以便後續可能需要檢查
+    :param html_file_path: CrYOLO進行evaluation後輸出的HTML文件路徑
+    :param topt_log: 紀錄topt的log文件路徑，以便後續可能需要檢查
     :return: 返回 topt 值，供計算boundary_distance使用
     """
-    # 讀取 evaluation html內容
-    with open(html_dir, 'r') as file:
+    # 確保 html_file_path 是一個文件路徑
+    if not os.path.isfile(html_file_path):
+        raise FileNotFoundError(f"HTML file not found: {html_file_path}")
+    
+    # 讀取 evaluation HTML 文件內容
+    with open(html_file_path, 'r') as file:
         content = file.read()
 
     # 使用正則表達式搜尋 topt 
     match = re.search(r"Best confidence threshold \( -t \) according F1 statistic:\s*(0\.\d+)", content)
     
     if match:
-        topt = float(match.group(1))  # group(0)為找到那一句、group(1)則是只有topt的值
+        topt = float(match.group(1))  # group(1) 提取的是 topt 值
         
         # 檢查 topt_log 是否存在，不存在則新增
         if not os.path.exists(topt_log):
@@ -82,13 +86,14 @@ def find_topt(html_dir, topt_log):
                 pass  # 檔案不存在時新增空文件
 
         # 將找到的 topt 值記錄下來
-        with open(topt_log, 'a') as f:  # 用追加寫入，紀錄每次迭代的topt
+        with open(topt_log, 'a') as f:  # 用追加寫入，紀錄每次迭代的 topt
             f.write(f"{topt}\n")
         print(f"topt: {topt} saved to {topt_log}")
         
         return topt  # 返回 topt 值
     else:
         raise ValueError("Cannot find the 'Best confidence threshold according F1 statistic' in the file.")
+
 '''
 def boundary_dist(topt):
     """

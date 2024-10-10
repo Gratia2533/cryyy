@@ -1,7 +1,7 @@
 import time
-from utils.workflow import run_cmd, extract_val_loss_from_output, write_val_loss_to_file
-from utils.directory import base_cmd, train_config_path, output_path, mrc_path, box_path, evaluation_path, partial_box_path
-from utils.tool import particles_amount_status
+from AutoALTidy.utils.workflow import run_cmd, extract_val_loss_from_output, write_val_loss_to_file
+from AutoALTidy.utils.directory import base_cmd, train_config_path, output_path, mrc_path, box_path, evaluation_path, partial_box_path
+from AutoALTidy.utils.tool import particles_amount_status
 import os
 
 # 定義 val_loss_log.txt 文件
@@ -34,7 +34,7 @@ def main(method, iou_threshold, filter_num):
         # Step 4: 執行Python工具生成標註
         if i < 8:
             annotation_cmd = (
-                f"python /home/m112040034/workspace/simulation/AutoALTidy/utils/correction.py "
+                f"python -m AutoALTidy.utils.correction "
                 f"{iter_index} --method {method} --iou_threshold {iou_threshold} --filter_num {filter_num}"
             )
             run_cmd(annotation_cmd)

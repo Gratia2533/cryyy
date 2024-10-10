@@ -20,6 +20,15 @@ def write_box_file(file_path, lines):
     with open(file_path, 'w') as file:
         file.writelines(lines)
 
+#================================================================================#
+    '''
+    以下3個函式的差異在於
+    ensure_directories_exist:不存在會去建立資料夾
+    check_directories_exist:單純檢查是否存在資料夾，不存在則報錯
+    check_file_exists:用於確認是否有該"檔案"
+    '''
+#================================================================================#
+
 # 確保目錄存在，若不存在則創建
 def ensure_directories_exist(*directories):
     for directory in directories:
@@ -41,6 +50,18 @@ def check_directories_exist(*directories):
     else:
         print("All paths that should exist have been confirmed")
 
+def check_file_exists(file_path):
+    """
+    確認檔案是否存在，若不存在則報錯
+    :param file_path: 要確認的檔案路徑
+    :raises FileNotFoundError: 若檔案不存在則拋出錯誤
+    """
+    if not os.path.isfile(file_path):
+        raise FileNotFoundError(f"File not found: {file_path}")
+    else:
+        print(f"File confirmed: {file_path}")
+#================================================================================#
+#================================================================================#
 
 #確認使用的粒子數量
 def particles_amount_status(path):

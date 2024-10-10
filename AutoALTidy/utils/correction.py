@@ -1,7 +1,7 @@
 import os
 import argparse
-import cbox2box as cb2b
-import tool, directory, regular, filter_pts
+from . import cbox2box as cb2b
+from . import tool, directory, regular, filter_pts, formula
 
 def main():
     """
@@ -43,8 +43,10 @@ def main():
 
     # 確保路徑存在，不存在會創建
     tool.ensure_directories_exist(box_dir, adjust_dir, unique_dir, filter_dir, next_dir)
+    # 確保檔案存在，不存在則報錯
+    tool.check_file_exists(evaluation_html_file)
     # 原本應該就要存在的路徑，不存在將報錯
-    tool.check_directories_exist(CBOX_dir, gt_dir, evaluation_html_file, current_dir)
+    tool.check_directories_exist(CBOX_dir, gt_dir, current_dir)
 
     # 先決定 `step1` 中要使用的處理函數
     def get_step1_function(method):
@@ -53,8 +55,8 @@ def main():
         elif method == "confidence" or method == "random":
             return cb2b.origin_confidence
         elif method == "boundary_dist":
-            tool.ensure_directories_exist(topt_log)
-            return lambda input_file_path, output_file_path: cb2b.Boundary_distance(input_file_path, output_file_path, evaluation_html_file, topt_log)
+            topt = formula.find_topt(evaluation_html_file, topt_log)
+            return lambda input_file_path, output_file_path: cb2b.Boundary_distance(input_file_path, output_file_path, topt)
         elif method == "norm_conf_es":
             return lambda input_file_path, output_file_path: cb2b.Norm_confidence_EntropyScore(input_file_path, output_file_path, CBOX_dir)
         else:

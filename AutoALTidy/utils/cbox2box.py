@@ -1,4 +1,4 @@
-import method
+from . import formula
 
 def EntropyScore(input_file, output_file):
     """
@@ -19,7 +19,7 @@ def EntropyScore(input_file, output_file):
         if len(values) >= 9:  # 確保有足夠的值
             try:
                 confidence = float(values[8])
-                indicator = method.entropy_score(confidence)
+                indicator = formula.entropy_score(confidence)
                 # 生成新的行，保留部分原始資料並加入處理後的 indicator
                 modified_line = f"{values[0]} {values[1]} {values[3]} {values[4]} {indicator}\n"
                 modified_lines.append(modified_line)
@@ -61,13 +61,12 @@ def origin_confidence(input_file, output_file):
     with open(output_file, 'w') as file:
         file.writelines(modified_lines)
 
-def Boundary_distance(input_file, output_file, evaluation_html_dir, topt_log):
+def Boundary_distance(input_file, output_file, topt_value):
     """
     對confidence進行|confidence-topt|
     :param input_file: .CBOX file path
     :param output_file: output file path of preprocessing predict label
-    :param evaluation_html_dir: CrYOLO prediction output html file
-    :param topt_log: Generate a txt file to save topt value for each iteration
+    :param topt_value: output from find_topt()
     """
     with open(input_file, 'r') as file:
         lines = file.readlines()
@@ -78,8 +77,7 @@ def Boundary_distance(input_file, output_file, evaluation_html_dir, topt_log):
     # 處理剩下的每一行
     modified_lines = []
 
-    # 取得topt
-    topt = method.find_topt(evaluation_html_dir, topt_log)
+    topt = topt_value
 
     for line in lines:
         values = line.split()
@@ -107,7 +105,7 @@ def Norm_confidence_EntropyScore(input_file, output_file, CBOX_dir):
     """
     with open(input_file, 'r') as file:
         lines = file.readlines()[19:]  # 刪除前19行
-    min_confidence, max_confidence = method.find_confidence_range(CBOX_dir)
+    min_confidence, max_confidence = formula.find_confidence_range(CBOX_dir)
     modified_lines = []
     for line in lines:
         values = line.split()
@@ -115,9 +113,9 @@ def Norm_confidence_EntropyScore(input_file, output_file, CBOX_dir):
             try:
                 confidence = float(values[8])
                 # 正規化 confidence
-                normalized_confidence = method.normalize_confidence(confidence, min_confidence, max_confidence)
+                normalized_confidence = formula.normalize_confidence(confidence, min_confidence, max_confidence)
                 # 計算 entropy score
-                entropyScore = method.entropy_score(normalized_confidence)
+                entropyScore = formula.entropy_score(normalized_confidence)
                 # 保存結果
                 modified_line = f"{values[0]} {values[1]} {values[3]} {values[4]} {entropyScore}\n"
                 modified_lines.append(modified_line)
