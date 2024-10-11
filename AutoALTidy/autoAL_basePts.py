@@ -43,6 +43,7 @@ def main(method, iou_threshold, filter_num):
     total_time = end_time - start_time
     print(f"Total execution time: {total_time:.2f} seconds")
     particles_amount_status(os.path.join(partial_box_path, f"{iter_index}"))
+    print("The method used in this experiment:", display_dict[method_display])#執行完後確認這次選的方法
     print("All iterations completed.")
 
 if __name__ == "__main__":
@@ -59,14 +60,13 @@ if __name__ == "__main__":
     method_dict = {
         1: "random",
         2: "entropy_score",
-        3: "low_conf_es",
+        3: "low_confidence",
         4: "norm_conf_es",
         5: "boundary_dist"
     }
 
-    # 提示可選擇 method
-    method_display = int(input('Method 1.Random, 2.Entropy Score, 3.Low Confidence, 4.Entropy Score in Normalize confidence, 5.Boundary Distance\n'
-                               'Enter integer to choose method: '))
+    # 顯示 method 選項，提示選擇
+    method_display = int(input(f'Method: {", ".join([f"{key}.{value}" for key, value in display_dict.items()])}\nEnter integer to choose method: '))
     
     # 分別用於顯示名稱和實際參數
     display_method = display_dict.get(method_display)

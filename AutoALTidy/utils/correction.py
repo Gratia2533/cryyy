@@ -48,7 +48,7 @@ def main():
     # 原本應該就要存在的路徑，不存在將報錯
     tool.check_directories_exist(CBOX_dir, gt_dir, current_dir)
 
-    # 先決定 `step1` 中要使用的處理函數
+    # 先決定 `step1` 中要使用的處理函數，有額外參數才須提前傳入
     def get_step1_function(method):
         if method == "entropy_score":
             return cb2b.EntropyScore
