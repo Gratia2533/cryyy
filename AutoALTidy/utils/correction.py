@@ -52,7 +52,7 @@ def main():
     def get_step1_function(method):
         if method == "entropy_score":
             return cb2b.EntropyScore
-        elif method == "confidence" or method == "random":
+        elif method == "low_confidence" or method == "random":
             return cb2b.origin_confidence
         elif method == "boundary_dist":
             topt = formula.find_topt(evaluation_html_file, topt_log)
@@ -70,7 +70,6 @@ def main():
         if filename.endswith(".cbox"):
             input_file_path = os.path.join(CBOX_dir, filename)
             output_file_path = os.path.join(box_dir, filename.replace(".cbox", ".box"))
-
             # 調用選擇的函數處理
             step1_function(input_file_path, output_file_path)
 
@@ -85,7 +84,7 @@ def main():
     根據 method 判斷過濾行為，只需判斷一次，acd 是 sort_values 的 ascending
     如果是Entropy Score或Entropy Score in Normalize Confidence，則要取較大值
     如果是Low Confidence或Boundary Distance，則要取較小值
-    '''
+    ''' 
     acd = method not in ["entropy_score", "norm_conf_es"]
 
     if method == "random":
