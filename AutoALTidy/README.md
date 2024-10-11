@@ -5,7 +5,7 @@ You still need to run [**`initial_random_select.py`**](https://github.com/Gratia
 
 The current version has a fixed dataset configuration, with 70, 10, and 20 samples for Training, Validation, and Test, respectively.<br>
 File names must follow the format **`micrograph_{i}`**, where **i is sequential**. Overall, further optimization is still needed.
-## I.How to Use
+## I. How to Use
 
 ### 1. Check Paths
 Ensure that the paths are correctly configured in **`directory.py`**.
@@ -45,7 +45,7 @@ To set an IOU threshold to retain particles whose IOU value with the Groundtruth
 #### 2-3. Set numbers of particle 
 Enter a number to control the number of particles added in each iteration.
 
-## II.AutoALTidy.utils
+## II. AutoALTidy.utils
 
 ### correction.py
 
