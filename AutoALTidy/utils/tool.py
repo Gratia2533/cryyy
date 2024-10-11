@@ -88,12 +88,12 @@ def particles_amount_status(path):
 #統整evaluation多次迭代的結果
 def integrate_evaluation(folder_path):
     """
-    整合資料夾中的HTML文件，提取結果並生成CSV文件。
+    整合資料夾中的HTML檔案，提取結果並生成CSV檔案。
     
-    :param folder_path: 包含HTML文件的資料夾路徑
-    :return: 輸出生成的CSV文件路徑
+    :param folder_path: 包含HTML檔案的資料夾路徑
+    :return: 輸出生成的CSV檔案路徑
     """
-    # 定義欄位名稱
+    # 定義欄位名稱(簡化欄位名稱)
     columns = [
         'iter', 'AUC', 'Topt', 'R Topt', 'R 0.3', 'R 0.2',
         'P Topt', 'P 0.3', 'P 0.2', 'F1 Topt', 'F1 0.3', 'F1 0.2',
@@ -103,13 +103,11 @@ def integrate_evaluation(folder_path):
 
     # 定義排序順序
     iter_order = ['initial', 'iter1', 'iter2', 'iter3', 'iter4', 'iter5', 'iter6', 'iter7', 'iter8']
-
-    # 替換資料夾路徑中的反斜杠
     
-    # 搜尋目錄中的HTML文件
+    # 搜尋路徑中的HTML檔案
     html_files = [os.path.join(folder_path, file) for file in os.listdir(folder_path) if file.endswith('.html')]
 
-    # 創建空的DataFrame列表
+    # 建立空的DataFrame List
     df_list = []
 
     for html_file in html_files:
@@ -124,12 +122,12 @@ def integrate_evaluation(folder_path):
 
         # 將文本內容按行分割並存儲在列表中
         lines = pre_content.splitlines()
-        info = lines[19]  # 假設表格內容在第20行
+        info = lines[19]  # 表格內容在第20行開始
         content = [item.strip() for item in info.strip('|').split('|')]
         bct_F1 = [item.strip() for item in lines[22].strip(' ').split(' ')][9]
         bct_F2 = [item.strip() for item in lines[23].strip(' ').split(' ')][9]
 
-        # 取得檔名作為第一個元素
+        # 取得檔名作為第一個元素(應為「第幾次」迭代)
         filename = os.path.splitext(os.path.basename(html_file))[0]
         filename = filename.split('_')[0]
         content[0] = filename
@@ -148,11 +146,11 @@ def integrate_evaluation(folder_path):
     # 按照 iter 欄位進行排序
     df = df.sort_values('iter').reset_index(drop=True)
 
-    # 生成輸出文件名
+    # 產生輸出的檔案路徑(同為evaluation.html的資料夾路徑，不需要重複確認路徑存在)
     filename = folder_path.split('/')[-1]
     output_file = os.path.join(folder_path, f"{filename}_result.csv")
 
-    # 將DataFrame存成CSV文件
+    # 將DataFrame存成CSV檔案
     df.to_csv(output_file, index=False)
 
     print(f"All evaluation result of each iterations are save to: {output_file}")
