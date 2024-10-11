@@ -1,7 +1,7 @@
 import time
 from AutoALTidy.utils.workflow import run_cmd, extract_val_loss_from_output, write_val_loss_to_file
-from AutoALTidy.utils.directory import base_cmd, train_config_path, output_path, mrc_path, box_path, evaluation_path, partial_box_path
-from AutoALTidy.utils.tool import particles_amount_status
+from AutoALTidy.utils.directory import base_cmd, train_config_path, output_path, mrc_path, box_path, evaluation_path, partial_box_path, evaluation_folder_path
+from AutoALTidy.utils.tool import particles_amount_status, integrate_evaluation
 import os
 
 # 定義 val_loss_log.txt 文件
@@ -42,6 +42,7 @@ def main(method, iou_threshold, filter_num):
     end_time = time.time()
     total_time = end_time - start_time
     print(f"Total execution time: {total_time:.2f} seconds")
+    integrate_evaluation(evaluation_folder_path)
     particles_amount_status(os.path.join(partial_box_path, f"{iter_index}"))
     print("The method used in this experiment:", display_dict[method_display])#執行完後確認這次選的方法
     print("All iterations completed.")
