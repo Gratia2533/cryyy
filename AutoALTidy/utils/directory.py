@@ -13,7 +13,7 @@ tool.check_directories_exist(train_groundtruth_box_folder_path)#Groundtruth本�
 
 
 ##應用不同method時，應替換這個路徑，避免覆蓋掉evaluation的結果
-evaluation_folder_path = '/home/m112040034/workspace/simulation/evaluation/EntropyScore'
+evaluation_folder_path = '/home/m112040034/workspace/simulation/evaluation/Low_confidence'
 tool.ensure_directories_exist(evaluation_folder_path)
 evaluation_path = evaluation_folder_path + '/'
 
