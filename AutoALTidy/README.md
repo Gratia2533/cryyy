@@ -33,7 +33,7 @@ During execution, you will be prompted to choose an Active Learning method.
 <br>
 3.Low Confidence: Selects particles based on **low confidence** levels.  
 <br>
-4.Entropy Score in Normalize Confidence: Selects particles using the entropy score within **normalized confidence**.  
+4.Entropy Score in Normalize Confidence: Selects particles using the entropy score with **normalized confidence**.  
 <br>
 5.Boundary Distance: Selects particles based on lower **|confidence - Topt|**.  
 <br>
