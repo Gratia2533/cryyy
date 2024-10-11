@@ -5,7 +5,7 @@ You still need to run [**`initial_random_select.py`**](https://github.com/Gratia
 
 The current version has a fixed dataset configuration, with 70, 10, and 20 samples for Training, Validation, and Test, respectively.<br>
 File names must follow the format **`micrograph_{i}`**, where **i is sequential**. Overall, further optimization is still needed.
-## How to Use
+## I.How to Use
 
 ### 1. Check Paths
 Ensure that the paths are correctly configured in **`directory.py`**.
@@ -44,3 +44,37 @@ To set an IOU threshold to retain particles whose IOU value with the Groundtruth
 
 #### 2-3. Set numbers of particle 
 Enter a number to control the number of particles added in each iteration.
+
+## II.AutoALTidy.utils
+
+### correction.py
+
+It is mainly called in the final step of the loop within the main program **`autoAL_basePts.py`** to generate the .box file for the next iteration.
+
+### cbox2box
+
+Processes the confidence values in the .box file differently based on the selected method.
+
+### directory
+
+**Almost** all path configurations should be set here.
+
+### filter_pts
+
+Determines the number of particles to add in each iteration, with three ways for addition: randomly selecting particles to add, adding the smaller values, or adding the larger values.
+
+### formula
+
+Essentially, this contains the calculation formulas for various indicator required by different methods in **`cbox2box`**.
+
+### regular
+
+The **shared process utilized** by each method, regardless of the indicator used.
+
+### tool
+
+A collection of shared utility functions, including path validation, integration of evaluation results, and more.
+
+### workflow
+
+Primarily used for detecting and processing **terminal outputs** within the automation workflow.
