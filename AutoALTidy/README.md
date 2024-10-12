@@ -22,7 +22,9 @@ Dataset/
 ├── partial_box/    #Annotation of particles that increase with each iteration
 │   ├── initail/micrograph_{i}.mrc for i in range (0, 70)
 │   └── iter{k}/micrograph_{i}.mrc for i in range (0, 70), for k in range (1,9)
-└── README.md
+└── evaluation/{change foldername} #Evaluation saving directory
+    ├── initail_evaluation.html
+    └── iter{k}_evaluation.html, for k in range (1,9)
 
 ```
 
