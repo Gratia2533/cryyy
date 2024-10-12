@@ -8,7 +8,7 @@ File names must follow the format **`micrograph_{i}`**, where **i is sequential*
 
 The folder structure should be like the following:
 
-```bash
+```
 
 Dataset/
 ├── mrc/    #For all micrographs
