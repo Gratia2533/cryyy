@@ -8,8 +8,7 @@ File names must follow the format **`micrograph_{i}`**, where **i is sequential*
 
 The folder structure should be like the following:
 
-```
-
+```bash
 Dataset/
 ├── mrc/    #For all micrographs
 │   ├── train/micrograph_{i}.mrc for i in range (0, 70)
@@ -26,7 +25,6 @@ Dataset/
 └── evaluation/{changeable foldername}/ #Evaluation saving directory, generate automatically when auto Active Learning processing
     ├── initial_evaluation.html
     └── iter{k}_evaluation.html, for k in range (1,9)
-
 ```
 
 ## I. How to Use
