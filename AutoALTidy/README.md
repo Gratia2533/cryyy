@@ -21,10 +21,10 @@ Dataset/
 │   └── test/micrograph_{i}.box for i in range (80, 100)
 │   #The folder(including file) above here should prepare in advance
 ├── partial_box/    #Annotation of particles that increase with each iteration
-│   ├── initail/micrograph_{i}.box for i in range (0, 70)   #Generate by initial_random_select.py manually
+│   ├── initial/micrograph_{i}.box for i in range (0, 70)   #Generate by initial_random_select.py manually
 │   └── iter{k}/micrograph_{i}.box for i in range (0, 70), for k in range (1,9)     #Generate automatically when correction processing
 └── evaluation/{changeable foldername}/ #Evaluation saving directory, generate automatically when auto Active Learning processing
-    ├── initail_evaluation.html
+    ├── initial_evaluation.html
     └── iter{k}_evaluation.html, for k in range (1,9)
 
 ```
