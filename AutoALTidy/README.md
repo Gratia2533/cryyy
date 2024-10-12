@@ -4,7 +4,28 @@
 You still need to run [**`initial_random_select.py`**](https://github.com/Gratia2533/cryyy/blob/main/main_pts/initial_random_select.py) first to generate **`partial_box/initial`** before proceeding.<br>
 
 The current version has a fixed dataset configuration, with 70, 10, and 20 samples for Training, Validation, and Test, respectively.<br>
-File names must follow the format **`micrograph_{i}`**, where **i is sequential**. Overall, further optimization is still needed.
+File names must follow the format **`micrograph_{i}`**, where **i is sequential**. Overall, further optimization is still needed.<br>
+
+The folder structure should be like the following:
+
+```bash
+
+Dataset/
+├── mrc/    #For all micrographs
+│   ├── train/micrograph_{i}.mrc for i in range (0, 70)
+│   ├── valid/micrograph_{i}.mrc for i in range (70, 80)
+│   └── test/micrograph_{i}.mrc for i in range (80, 100)
+├── box/    #For Groundtruth .box files
+│   ├── train/micrograph_{i}.mrc for i in range (0, 70)
+│   ├── valid/micrograph_{i}.mrc for i in range (70, 80)
+│   └── test/micrograph_{i}.mrc for i in range (80, 100)
+├── partial_box/    #Annotation of particles that increase with each iteration
+│   ├── initail/micrograph_{i}.mrc for i in range (0, 70)
+│   └── iter{k}/micrograph_{i}.mrc for i in range (0, 70), for k in range (1,9)
+└── README.md
+
+```
+
 ## I. How to Use
 
 ### 1. Check Paths
