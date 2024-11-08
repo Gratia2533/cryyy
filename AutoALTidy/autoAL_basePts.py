@@ -1,7 +1,8 @@
 import time
 from AutoALTidy.utils.workflow import run_cmd, extract_val_loss_from_output, write_val_loss_to_file
-from AutoALTidy.utils.directory import base_cmd, train_config_path, output_path, mrc_path, box_path, evaluation_path, partial_box_path, evaluation_folder_path
+from AutoALTidy.utils.directory import base_cmd, train_config_path, output_path, mrc_path, box_path, evaluation_path, partial_box_path, evaluation_folder_path, evaluation_valid_folder
 from AutoALTidy.utils.tool import particles_amount_status, integrate_evaluation
+from AutoALTidy.utils.formula import only_get_topt
 import os
 
 # 定義 val_loss_log.txt 文件
@@ -22,13 +23,24 @@ def main(method, iou_threshold, filter_num):
         val_loss = extract_val_loss_from_output(output)
         write_val_loss_to_file(val_loss_file, iter_index, val_loss)
 
-        # Step 2: Prediction
-        if i < 8:
+        if i<8:
+            # Step 2: Prediction
             prediction_cmd = f"{base_cmd} predict -c {train_config_path}{iter_index}.json -w {output_path}{iter_index}/{iter_index}_model.h5 -i {mrc_path}train -o {output_path}{iter_index} -t 0 -d 0 -pbs 3 --gpu_fraction 1.0 -nc -1 --norm_margin 0.0 -sm LINE_STRAIGHTNESS -st 0.95 -sr 1.41 -ad 10 --directional_method PREDICTED -mw 100 -tsr -1 -tmem 0 -mn3d 2 -tmin 5 -twin -1 -tedge 0.4 -tmerge 0.8 -g 2"
-            run_cmd(prediction_cmd)
+        elif i==8:
+            prediction_cmd = f"{base_cmd} predict -c {train_config_path}{iter_index}.json -w {output_path}{iter_index}/{iter_index}_model.h5 -i {mrc_path}test -o {output_path}{iter_index} -t 0 -d 0 -pbs 3 --gpu_fraction 1.0 -nc -1 --norm_margin 0.0 -sm LINE_STRAIGHTNESS -st 0.95 -sr 1.41 -ad 10 --directional_method PREDICTED -mw 100 -tsr -1 -tmem 0 -mn3d 2 -tmin 5 -twin -1 -tedge 0.4 -tmerge 0.8 -g 2"
+        
+        run_cmd(prediction_cmd)
 
-        # Step 3: Evaluation
-        evaluation_cmd = f"{base_cmd} evaluation -c {train_config_path}{iter_index}.json -w {output_path}{iter_index}/{iter_index}_model.h5 -o {evaluation_path}{iter_index}_evaluation.html -i {mrc_path}test -b {box_path}test -g 3"
+
+        # Step 3: Evaluation on valid
+        evaluation_cmd = f"{base_cmd} evaluation -c {train_config_path}{iter_index}.json -w {output_path}{iter_index}/{iter_index}_model.h5 -o {evaluation_valid_folder}{iter_index}_EVALvalid.html -i {mrc_path}valid -b {box_path}valid -g 3"
+        run_cmd(evaluation_cmd)
+
+        evaluation_html_file = directory.evaluation_valid_folder + f"{iter_index}_EVALvalid.html"
+        valid_topt = float(only_get_topt(evaluation_html_file))
+
+        # Step 3: Evaluation on test
+        evaluation_cmd = f"{base_cmd} evaluation -c {train_config_path}{iter_index}.json -w {output_path}{iter_index}/{iter_index}_model.h5 -o {evaluation_path}{iter_index}_evaluation.html -i {mrc_path}test -b {box_path}test -g 3 -t {valid_topt}"
         run_cmd(evaluation_cmd)
 
         # Step 4: 執行Python工具生成標註
@@ -72,7 +84,8 @@ if __name__ == "__main__":
     # 分別用於顯示名稱和實際參數
     display_method = display_dict.get(method_display)
     method = method_dict.get(method_display)
-    
+    print('processing method:', method)
+
     if method is None:
         print("Please only enter an integer from 1 to 5.")
         exit(1)  # 輸入不正確時停止

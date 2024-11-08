@@ -13,9 +13,14 @@ tool.check_directories_exist(train_groundtruth_box_folder_path)#Groundtruth本�
 
 
 ##應用不同method時，應替換這個路徑，避免覆蓋掉evaluation的結果
-evaluation_folder_path = '/home/m112040034/workspace/simulation/evaluation/Low_confidence'
+evaluation_folder_path = '/home/m112040034/workspace/simulation/evaluation/Random10028'
 tool.ensure_directories_exist(evaluation_folder_path)
 evaluation_path = evaluation_folder_path + '/'
+
+#Catcha Topt would be used
+evaluation_valid_folder_path = evaluation_path + 'EVALvalid'
+tool.ensure_directories_exist(evaluation_valid_folder_path)
+evaluation_valid_folder = evaluation_valid_folder_path + '/'
 
 
 ##每次iteration使用的粒子儲存的地方，須避免覆蓋或進行另一次實驗重複寫入

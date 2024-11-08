@@ -94,6 +94,29 @@ def find_topt(html_file_path, topt_log):
     else:
         raise ValueError("Cannot find the 'Best confidence threshold according F1 statistic' in the file.")
 
+def only_get_topt(html_file_path):
+    """
+    :param html_file_path: CrYOLO進行evaluation後輸出的HTML文件路徑
+    :return: 返回 topt 值，因為需使用validation上的topt
+    """
+    # 確保 html_file_path 是一個文件路徑
+    if not os.path.isfile(html_file_path):
+        raise FileNotFoundError(f"HTML file not found: {html_file_path}")
+    
+    # 讀取 evaluation HTML 文件內容
+    with open(html_file_path, 'r') as file:
+        content = file.read()
+
+    # 使用正則表達式搜尋 topt 
+    match = re.search(r"Best confidence threshold \( -t \) according F1 statistic:\s*(0\.\d+)", content)
+    
+    if match:
+        topt = float(match.group(1))  # group(1) 提取的是 topt 值
+        print(f"topt: {topt}")  # 顯示 tpot 值
+        return topt  # 返回 topt 值
+    else:
+        raise ValueError("Cannot find the 'Best confidence threshold according F1 statistic' in the file.")
+
 '''
 def boundary_dist(topt):
     """

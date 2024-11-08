@@ -38,7 +38,7 @@ def main():
     filter_dir = os.path.join(directory.output_path, f"{iter_index}/process/filter")
     next_dir = os.path.join(directory.partial_box_path, f"{next_iter}")
 
-    evaluation_html_file = directory.evaluation_path + f"{iter_index}_evaluation.html"
+    evaluation_html_file = directory.evaluation_valid_folder + f"{iter_index}_EVALvalid.html"
     topt_log = directory.evaluation_path + "topt_log.txt"
 
     # 確保路徑存在，不存在會創建
