@@ -36,7 +36,7 @@ def main(method, iou_threshold, filter_num):
         evaluation_cmd = f"{base_cmd} evaluation -c {train_config_path}{iter_index}.json -w {output_path}{iter_index}/{iter_index}_model.h5 -o {evaluation_valid_folder}{iter_index}_EVALvalid.html -i {mrc_path}valid -b {box_path}valid -g 3"
         run_cmd(evaluation_cmd)
 
-        evaluation_html_file = directory.evaluation_valid_folder + f"{iter_index}_EVALvalid.html"
+        evaluation_html_file = evaluation_valid_folder + f"{iter_index}_EVALvalid.html"
         valid_topt = float(only_get_topt(evaluation_html_file))
 
         # Step 3: Evaluation on test
