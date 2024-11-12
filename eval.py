@@ -149,11 +149,11 @@ def create_parser(parser):
     optional_group.add_argument(
         "-g", "--gpu", default=0, type=int, help="Specifiy which gpu should be used."
     )
-
+#==========================================add==========================================#
     optional_group.add_argument(
         "-t", "--topt", type=float, help="Topt threshold for evaluation on validation set"
     )
-    
+#=======================================================================================#
 
 def get_parser():
     parser = GooeyParser(
@@ -311,9 +311,12 @@ def main(args=None):
         auc_avg += result_dict["AUC"]
 
         '''
+        #originally
         topt = "{0:.2f}".format(result_dict["MAX_F1_THRESH"])
         topt_avg += result_dict["MAX_F1_THRESH"]
         '''
+
+#==========================================add==========================================#
         
         if topt_threshold is not None:
             topt = "{0:.2f}".format(topt_threshold)
@@ -322,7 +325,7 @@ def main(args=None):
             topt = "{0:.2f}".format(result_dict["MAX_F1_THRESH"])
             topt_avg += result_dict["MAX_F1_THRESH"]
 
-
+#==========================================add==========================================#
 
         pTopt = "{0:.2f}".format(result_dict[str(result_dict["MAX_F1_THRESH"])][1])
         pTopt_avg += result_dict[str(result_dict["MAX_F1_THRESH"])][1]
